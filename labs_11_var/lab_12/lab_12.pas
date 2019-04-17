@@ -74,15 +74,15 @@ end;
 
 
 var
-    stud_arr: array of student;
     stud: student;
+    aver: real;
 
 begin
     // Создание экземпляра и его вывод
     writeln('Создание экземпляра и его вывод:');
     writeln;
-    var marks: array of integer := (3, 5, 4, 5, 4);
-    stud := student_init('Балабасов', 'Илья', 'Олегович', 5, marks);
+    var marks := Arr(3, 5, 4, 5, 4);
+    stud := student_init('Бабасов', 'Илья', 'Олегович', 5, marks);
     print_student(stud);
     writeln;
     
@@ -91,13 +91,15 @@ begin
     var min_avrg := 4;// Минимальный средний балл
     writeln('Создание массива экземпляров и вывод только тех, средний балл которых составляет ', min_avrg, ' и более:');
     writeln;
-    setlength(stud_arr, len);
-    for i: integer := 0 to len - 1 do stud_arr[i] := generate_stud; // генерация массива студентов
+    var stud_arr := SeqGen(len, x -> generate_stud).ToArray; // генерация массива студентов
     for i: integer := 0 to len - 1 do
     begin
-        writeln('Средний балл: ', stud_arr[i].marks.Average);
-        if stud_arr[i].marks.Average >= min_avrg then
-            print_student(stud_arr[i]);
+        aver := stud_arr[i].marks.Average;
+        println('Средний балл:', aver);
+        if aver >= min_avrg then
+            print_student(stud_arr[i])
+        else
+            println('Средний балл ниже минимального.');
         writeln;
     end;
 end.
